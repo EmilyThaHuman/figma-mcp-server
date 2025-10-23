@@ -1,0 +1,40 @@
+{
+  "name": "figma-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for Figma integration with ChatGPT Apps SDK - supports OAuth and no-auth modes",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/server.ts",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "figma",
+    "figjam",
+    "chatgpt",
+    "openai",
+    "apps-sdk",
+    "design",
+    "mermaid",
+    "diagrams"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

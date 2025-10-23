@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FigJam Diagram</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 24px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 24px 32px;
+      color: white;
+    }
+
+    .header-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .figma-logo {
+      width: 32px;
+      height: 32px;
+      background: white;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #667eea;
+    }
+
+    .header-subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .diagram-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .diagram-container {
+      background: #fafafa;
+      border-radius: 12px;
+      padding: 32px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+
+    #mermaid-diagram {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+    }
+
+    .diagram-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .info-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid #667eea;
+    }
+
+    .info-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #666;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .info-value {
+      font-size: 16px;
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .btn-secondary:hover {
+      background: #f8f9ff;
+    }
+
+    .code-block {
+      background: #1e1e1e;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .code-label {
+      color: #888;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .copy-btn {
+      padding: 6px 12px;
+      background: #2d2d2d;
+      color: #888;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #3d3d3d;
+      color: #fff;
+    }
+
+    .code-content {
+      color: #d4d4d4;
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 12px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 16px;
+      }
+
+      .container {
+        border-radius: 12px;
+      }
+
+      .header {
+        padding: 20px 24px;
+      }
+
+      .header-title {
+        font-size: 24px;
+      }
+
+      .content {
+        padding: 24px;
+      }
+
+      .diagram-container {
+        padding: 20px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-title">
+        <span class="figma-logo">F</span>
+        FigJam Diagram
+      </div>
+      <div class="header-subtitle">Created with Mermaid.js</div>
+    </div>
+
+    <div class="content">
+      <div id="root"></div>
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({ 
+      startOnLoad: false,
+      theme: 'default',
+      securityLevel: 'loose',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+    });
+
+    (async function() {
+      const props = window.__WIDGET_PROPS__ || {};
+      const { 
+        mermaidCode = '', 
+        diagramType = 'flowchart',
+        title = 'Untitled Diagram',
+        figmaUrl = ''
+      } = props;
+      
+      const root = document.getElementById('root');
+      
+      if (!mermaidCode) {
+        root.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #1a1a1a;">No diagram data</div>
+            <div>Unable to generate diagram. Please try again.</div>
+          </div>
+        `;
+        return;
+      }
+
+      // Diagram title
+      const titleEl = document.createElement('div');
+      titleEl.className = 'diagram-title';
+      titleEl.innerHTML = title + '<span class="badge">' + (diagramType || 'diagram') + '</span>';
+      root.appendChild(titleEl);
+
+      // Diagram info cards
+      const infoContainer = document.createElement('div');
+      infoContainer.className = 'diagram-info';
+      
+      const diagramTypeCard = document.createElement('div');
+      diagramTypeCard.className = 'info-card';
+      diagramTypeCard.innerHTML = `
+        <div class="info-label">Diagram Type</div>
+        <div class="info-value">${diagramType || 'Not specified'}</div>
+      `;
+      infoContainer.appendChild(diagramTypeCard);
+
+      const linesCard = document.createElement('div');
+      linesCard.className = 'info-card';
+      linesCard.innerHTML = `
+        <div class="info-label">Lines of Code</div>
+        <div class="info-value">${mermaidCode.split('\\n').length}</div>
+      `;
+      infoContainer.appendChild(linesCard);
+
+      if (figmaUrl) {
+        const urlCard = document.createElement('div');
+        urlCard.className = 'info-card';
+        urlCard.innerHTML = `
+          <div class="info-label">Figma URL</div>
+          <div class="info-value" style="font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            <a href="${figmaUrl}" target="_blank" style="color: #667eea; text-decoration: none;">View in Figma →</a>
+          </div>
+        `;
+        infoContainer.appendChild(urlCard);
+      }
+
+      root.appendChild(infoContainer);
+
+      // Render diagram
+      const diagramContainer = document.createElement('div');
+      diagramContainer.className = 'diagram-container';
+      diagramContainer.innerHTML = '<div id="mermaid-diagram">Loading diagram...</div>';
+      root.appendChild(diagramContainer);
+
+      try {
+        const { svg } = await mermaid.render('generatedDiagram', mermaidCode);
+        document.getElementById('mermaid-diagram').innerHTML = svg;
+      } catch (error) {
+        console.error('Error rendering diagram:', error);
+        document.getElementById('mermaid-diagram').innerHTML = `
+          <div style="color: #d32f2f; padding: 20px; text-align: center;">
+            <div style="font-weight: 600; margin-bottom: 8px;">Failed to render diagram</div>
+            <div style="font-size: 14px;">${error.message || 'Unknown error'}</div>
+          </div>
+        `;
+      }
+
+      // Action buttons
+      const actionsContainer = document.createElement('div');
+      actionsContainer.className = 'actions';
+
+      if (figmaUrl) {
+        const openBtn = document.createElement('button');
+        openBtn.className = 'btn btn-primary';
+        openBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          Open in FigJam
+        `;
+        openBtn.onclick = () => window.open(figmaUrl, '_blank');
+        actionsContainer.appendChild(openBtn);
+      }
+
+      const downloadBtn = document.createElement('button');
+      downloadBtn.className = 'btn btn-secondary';
+      downloadBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download SVG
+      `;
+      downloadBtn.onclick = () => {
+        const svg = document.querySelector('#mermaid-diagram svg');
+        if (svg) {
+          const svgData = new XMLSerializer().serializeToString(svg);
+          const blob = new Blob([svgData], { type: 'image/svg+xml' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${title.replace(/\\s+/g, '-').toLowerCase()}.svg`;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      };
+      actionsContainer.appendChild(downloadBtn);
+
+      root.appendChild(actionsContainer);
+
+      // Code block
+      const codeBlock = document.createElement('div');
+      codeBlock.className = 'code-block';
+      codeBlock.innerHTML = `
+        <div class="code-header">
+          <div class="code-label">Mermaid.js Code</div>
+          <button class="copy-btn" onclick="
+            navigator.clipboard.writeText(${JSON.stringify(mermaidCode)});
+            this.textContent = '✓ Copied';
+            setTimeout(() => this.textContent = 'Copy', 2000);
+          ">Copy</button>
+        </div>
+        <div class="code-content">${mermaidCode.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+      `;
+      root.appendChild(codeBlock);
+    })();
+  </script>
+</body>
+</html>
+
