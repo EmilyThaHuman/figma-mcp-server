@@ -30,7 +30,7 @@ import { z } from "zod";
 // Figma OAuth configuration
 const FIGMA_CLIENT_ID = process.env.FIGMA_CLIENT_ID || "";
 const FIGMA_CLIENT_SECRET = process.env.FIGMA_CLIENT_SECRET || "";
-const FIGMA_REDIRECT_URI = process.env.FIGMA_REDIRECT_URI || "http://localhost:8000/auth/callback";
+const FIGMA_REDIRECT_URI = process.env.FIGMA_REDIRECT_URI || "http://0.0.0.0:8000/auth/callback";
 const FIGMA_API_BASE = "https://api.figma.com/v1";
 
 type FigmaWidget = {
@@ -932,11 +932,11 @@ httpServer.on("clientError", (err: Error, socket) => {
   socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
 });
 
-httpServer.listen(port, () => {
-  console.log(`Figma MCP server listening on http://localhost:${port}`);
-  console.log(`  SSE stream: GET http://localhost:${port}${ssePath}`);
-  console.log(`  Message post endpoint: POST http://localhost:${port}${postPath}?sessionId=...`);
-  console.log(`  OAuth callback: GET http://localhost:${port}${authCallbackPath}`);
+httpServer.listen(port, '0.0.0.0', () => {
+  console.log(`Figma MCP server listening on http://0.0.0.0:${port}`);
+  console.log(`  SSE stream: GET http://0.0.0.0:${port}${ssePath}`);
+  console.log(`  Message post endpoint: POST http://0.0.0.0:${port}${postPath}?sessionId=...`);
+  console.log(`  OAuth callback: GET http://0.0.0.0:${port}${authCallbackPath}`);
   console.log(`\nMake sure to set your environment variables:`);
   console.log(`  FIGMA_CLIENT_ID=<your_client_id>`);
   console.log(`  FIGMA_CLIENT_SECRET=<your_client_secret>`);
