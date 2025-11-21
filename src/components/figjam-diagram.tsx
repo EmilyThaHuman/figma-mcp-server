@@ -3,7 +3,7 @@ import { useWidgetProps, useDisplayMode } from '../hooks';
 import '../styles/index.css';
 import { cn } from '../lib/utils';
 
-interface Props {
+interface Props extends Record<string, unknown> {
   title?: string;
   description?: string;
   diagramType?: string;
@@ -14,8 +14,8 @@ interface Props {
   author?: string;
 }
 
-const FigjamDiagram: React.FC = () => {
-  const props = useWidgetProps<Props>({
+const FigjamDiagram: React.FC<Props> = (defaultProps) => {
+  const props = useWidgetProps<Props>(defaultProps || {
     title: 'FigJam Diagram',
     description: '',
     diagramType: 'flowchart',
@@ -28,7 +28,7 @@ const FigjamDiagram: React.FC = () => {
 
   const { title, description, diagramType, mermaidCode, fileKey, nodeId, lastModified, author } = props;
   const displayMode = useDisplayMode();
-  const isDark = displayMode === 'dark' || 
+  const isDark = (displayMode as string) === 'dark' || 
     (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   
   const diagramRef = useRef<HTMLDivElement>(null);
@@ -67,6 +67,7 @@ const FigjamDiagram: React.FC = () => {
         document.head.removeChild(script);
       };
     }
+    return undefined;
   }, [mermaidCode, rendered, isDark]);
 
   const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.2, 3));
