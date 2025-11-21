@@ -1,0 +1,12 @@
+name = "figma-mcp-server"
+main = "src/server/worker.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+BASE_URL = "https://figma-mcp-server.reedvogt.workers.dev"
+
+# Note: This server works WITHOUT API credentials for diagram generation
+# OAuth is only needed for screenshot and design context tools (not included in worker version)
+

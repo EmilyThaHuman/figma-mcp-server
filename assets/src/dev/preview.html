@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark" class="dark" style="--safe-area-inset-top: 0px; --safe-area-inset-bottom: 0px; --safe-area-inset-left: 0px; --safe-area-inset-right: 0px;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Figma MCP Server - Widget Preview</title>
+  <style>body { margin: 0; }</style>
+  <script>
+    // Detect system theme preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.classList.remove('dark');
+    }
+    
+    // Listen for theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (e.matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.classList.remove('dark');
+      }
+    });
+  </script>
+  <script type="module" crossorigin src="/preview.js"></script>
+  <link rel="modulepreload" crossorigin href="/figjam-diagram-BdJLCYlL.js">
+  <link rel="stylesheet" crossorigin href="/figjam-diagram-B81HuC_2.css">
+</head>
+<body style="background-color: #F5F5F5;" data-fpl-version="ui3">
+  <div id="root"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
